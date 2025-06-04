@@ -151,22 +151,23 @@ end
 
         filter "system:windows"
             defines{"_WIN32"}
+            links {"winmm", "gdi32", "opengl32"}
             
+            -- SDL3 x64 específic
             filter { "system:windows", "platforms:x64" }
                 libdirs { sdl3_dir .. "/lib/x64" }
                 postbuildcommands {
-                    "{COPY} " .. sdl3_dir .. "/lib/x64/SDL3.dll %{cfg.targetdir}"
+                    -- Path correcte: des de build/build_files/ cap a build/external/SDL3/lib/x64/
+                    "{COPY} \"$(SolutionDir)build\\external\\SDL3\\lib\\x64\\SDL3.dll\" \"$(SolutionDir)bin\\%{cfg.buildcfg}\\\""
                 }
                 
+            -- SDL3 x86 específic
             filter { "system:windows", "platforms:x86" }
                 libdirs { sdl3_dir .. "/lib/x86" }
                 postbuildcommands {
-                    "{COPY} " .. sdl3_dir .. "/lib/x86/SDL3.dll %{cfg.targetdir}"
+                    -- Path correcte: des de build/build_files/ cap a build/external/SDL3/lib/x86/
+                    "{COPY} \"$(SolutionDir)build\\external\\SDL3\\lib\\x86\\SDL3.dll\" \"$(SolutionDir)bin\\%{cfg.buildcfg}\\\""
                 }
-                
-            filter { "system:windows" }
-                links {"winmm", "gdi32", "opengl32"}
-                libdirs {"../bin/%{cfg.buildcfg}"}
 
         filter "system:linux"
             links {"pthread", "m", "dl", "rt", "X11"}
