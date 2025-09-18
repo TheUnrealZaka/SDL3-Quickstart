@@ -73,12 +73,8 @@ end
 downloadSDL3 = true
 sdl3_dir = "external/SDL3"
 
-workspaceName = 'HOL'
 baseName = path.getbasename(path.getdirectory(os.getcwd()))
-
-if (baseName ~= 'HOL') then
-    workspaceName = baseName
-end
+workspaceName = baseName
 
 if (os.isdir('build_files') == false) then
     os.mkdir('build_files')
@@ -131,17 +127,25 @@ end
 
         vpaths 
         {
-            ["Header Files/*"] = { "../include/**.h", "../src/**.h"},
-            ["Source Files/*"] = {"../src/**.c"},
+            ["Header Files/*"] = { "../include/**.h", "../include/**.hpp", "../src/**.h", "../src/**.hpp"},
+            ["Source Files/*"] = {"../src/**.c", "../src/**.cpp"},
         }
         
-        files {"../src/**.c", "../src/**.h", "../include/**.h"}
+        files {
+            "../src/**.c", 
+            "../src/**.cpp", 
+            "../src/**.h", 
+            "../src/**.hpp", 
+            "../include/**.h", 
+            "../include/**.hpp"
+        }
 
         includedirs { "../src" }
         includedirs { "../include" }
         includedirs { sdl3_dir .. "/include" }
 
         cdialect "C17"
+        cppdialect "C++17"
         platform_defines()
 
         filter "action:vs*"
