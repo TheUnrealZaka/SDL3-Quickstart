@@ -26,7 +26,7 @@ function check_sdl3()
         if(not os.isfile("SDL3-devel-VC.zip")) then
             print("SDL3 not found, downloading from GitHub")
             local result_str, response_code = http.download(
-                "https://github.com/libsdl-org/SDL/releases/download/release-3.2.16/SDL3-devel-3.2.16-VC.zip", 
+                "https://github.com/libsdl-org/SDL/releases/download/release-3.2.22/SDL3-devel-3.2.22-VC.zip", 
                 "SDL3-devel-VC.zip", 
                 {
                     progress = download_progress,
@@ -37,8 +37,8 @@ function check_sdl3()
         print("Unzipping to " .. os.getcwd())
         zip.extract("SDL3-devel-VC.zip", os.getcwd())
         -- Rename the extracted folder to SDL3 for consistency
-        if os.isdir("SDL3-3.2.16") then
-            os.rename("SDL3-3.2.16", "SDL3")
+        if os.isdir("SDL3-3.2.22") then
+            os.rename("SDL3-3.2.22", "SDL3")
         end
         os.remove("SDL3-devel-VC.zip")
     end
